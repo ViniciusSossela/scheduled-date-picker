@@ -1,0 +1,21 @@
+name: sample
+author: Vinicius Sossella <viniciussossella@gmail.com>
+
+environment:
+  sdk: ">=2.6.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  intl: ^0.16.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  scheduled_date_picker:
+    path: ../
+
+flutter:
+
+  uses-material-design: true

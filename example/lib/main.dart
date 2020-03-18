@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scheduled_date_picker/scheduled_date.dart';
+import 'package:scheduled_date_picker/scheduled_date_picker.dart';
 
 void main() {
   runApp(SampleApp());

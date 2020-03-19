@@ -1,3 +1,7 @@
+## [1.0.1] - 19/03/2020.
+
+* Update pubspec description;
+
 ## [1.0.0] - 19/03/2020.
 
 * Update readme with example usage;

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
-enum WeekDay { SEG, TER, QUA, QUI, SEX, SAB, DOM }
+import 'package:scheduled_date_picker/src/week_day.dart';
 
 class WeekDaySelector extends StatefulWidget {
   final Function(List<WeekDay> weekDays) onChanged;

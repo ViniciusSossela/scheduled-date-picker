@@ -3,7 +3,7 @@
 The scheduled date picker is a set of widgets that allows scheduling date. This can be useful in many scenarios, for scheduled tasks for example;
 
 ## Demo
-<img src="https://github.com/ViniciusSossela/scheduled-date-picker/blob/master/docs/schedule_date_picker.gif" width="300">
+<img src="https://github.com/ViniciusSossela/scheduled-date-picker/blob/master/doc/schedule_date_picker.gif" width="300">
 
 ## Getting Started
 

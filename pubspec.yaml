@@ -1,6 +1,6 @@
 name: scheduled_date_picker
 description: The scheduled date picker is a set of widgets that allows scheduling date. This can be useful in many scenarios, for scheduled tasks for example.
-version: 1.0.2
+version: 1.0.3
 author: Vinicius T. Sossella <viniciussossella@gmail.com>
 homepage: https://github.com/ViniciusSossela/scheduled-date-picker
 

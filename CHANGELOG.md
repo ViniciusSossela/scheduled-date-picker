@@ -1,3 +1,9 @@
-## [0.0.1] - TODO: Add release date.
+## [1.0.0] - 19/03/2020.
 
-* TODO: Describe initial release.
+* Update readme with example usage;
+* Exported WeekDay enum to be used outside the lib;
+* Added author to pubspec;
+
+## [0.0.1] - 18/03/2020.
+
+* Initial version.

@@ -20,6 +20,10 @@ class SampleAppState extends State<SampleApp> {
         appBar: AppBar(title: Text('Sample App')),
         body: ScheduledDatePicker(
           defaultLocale: 'pt',
+          initialType: ScheduledDateType.CUSTOMIZED,
+          initialWeekDays: [WeekDay.SEG, WeekDay.QUA, WeekDay.SEX],
+          initialStartDate: DateTime.now().add(Duration(days: 5)),
+          initialEndDate: DateTime.now().add(Duration(days: 15)),
           onStartDateChanged: (startDate) => print(startDate.toString()),
           onEndDateChanged: (endDate) => print(endDate.toString()),
           onScheduleDateChanged: (scheduleDate) =>

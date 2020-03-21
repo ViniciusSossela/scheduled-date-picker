@@ -1,3 +1,7 @@
+## [1.0.4] - 21/03/2020
+
+* Added support to initialize ScheduledDatePicker with initial values;
+
 ## [1.0.3] - 19/03/2020
 
 * Resized demo gif on readme;

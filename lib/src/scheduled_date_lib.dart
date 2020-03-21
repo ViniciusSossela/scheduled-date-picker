@@ -16,6 +16,11 @@ const ScheduledDateTypeValues = {
 
 class ScheduledDatePicker extends StatefulWidget {
   final String defaultLocale;
+  final ScheduledDateType initialType;
+  final DateTime initialScheduledDate;
+  final DateTime initialStartDate;
+  final DateTime initialEndDate;
+  final List<WeekDay> initialWeekDays;
   final Function(ScheduledDateType) onTypeChanged;
   final Function(List<WeekDay>) onWeekDaysChanged;
   final Function(DateTime) onStartDateChanged;
@@ -29,17 +34,23 @@ class ScheduledDatePicker extends StatefulWidget {
       this.onWeekDaysChanged,
       this.onStartDateChanged,
       this.onEndDateChanged,
-      this.onScheduleDateChanged})
+      this.onScheduleDateChanged,
+      this.initialType,
+      this.initialScheduledDate,
+      this.initialStartDate,
+      this.initialEndDate,
+      this.initialWeekDays})
       : super(key: key);
   @override
   _ScheduledDatePickerState createState() => _ScheduledDatePickerState();
 }
 
 class _ScheduledDatePickerState extends State<ScheduledDatePicker> {
-  ScheduledDateType _scheduledDateTypeSelected = ScheduledDateType.NOW;
-  List<WeekDay> weekDaysSelected = [];
-  DateTime startDateSelected, endDateSelected;
-  DateTime scheduledDate = DateTime.now();
+  ScheduledDateType _scheduledDateTypeSelected;
+  List<WeekDay> weekDaysSelected;
+  DateTime startDateSelected;
+  DateTime endDateSelected;
+  DateTime scheduledDate;
 
   final dropDownItems = [
     ScheduledDateType.NOW,
@@ -63,6 +74,11 @@ class _ScheduledDatePickerState extends State<ScheduledDatePicker> {
   void initState() {
     super.initState();
     initializeDateFormatting(widget.defaultLocale);
+    _scheduledDateTypeSelected = widget.initialType ?? ScheduledDateType.NOW;
+    weekDaysSelected = widget.initialWeekDays;
+    startDateSelected = widget.initialStartDate;
+    endDateSelected = widget.initialEndDate;
+    scheduledDate = widget.initialScheduledDate ?? DateTime.now();
   }
 
   @override
@@ -200,6 +216,7 @@ class _ScheduledDatePickerState extends State<ScheduledDatePicker> {
       ),
       SizedBox(height: 5),
       WeekDaySelector(
+        initialWeekDaysSelected: weekDaysSelected,
         onChanged: (weekDays) {
           weekDaysSelected = weekDays;
           if (widget.onWeekDaysChanged != null)

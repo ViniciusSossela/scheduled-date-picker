@@ -4,8 +4,11 @@ import 'package:scheduled_date_picker/src/week_day.dart';
 
 class WeekDaySelector extends StatefulWidget {
   final Function(List<WeekDay> weekDays) onChanged;
+  final List<WeekDay> initialWeekDaysSelected;
 
-  const WeekDaySelector({Key key, @required this.onChanged}) : super(key: key);
+  const WeekDaySelector(
+      {Key key, @required this.onChanged, this.initialWeekDaysSelected})
+      : super(key: key);
   @override
   _WeekDaySelectorState createState() => _WeekDaySelectorState();
 }
@@ -31,7 +34,7 @@ class _WeekDaySelectorState extends State<WeekDaySelector> {
     WeekDay.DOM: 'D',
   };
 
-  List<WeekDay> weekDaysSelected = [];
+  List<WeekDay> weekDaysSelected;
 
   _weekTapped(WeekDay weekDay) {
     setState(() {
@@ -45,6 +48,12 @@ class _WeekDaySelectorState extends State<WeekDaySelector> {
 
   bool _isWeekDaySelected(WeekDay weekDay) =>
       weekDaysSelected.contains(weekDay);
+
+  @override
+  void initState() {
+    super.initState();
+    weekDaysSelected = widget.initialWeekDaysSelected ?? [];
+  }
 
   @override
   Widget build(BuildContext context) {

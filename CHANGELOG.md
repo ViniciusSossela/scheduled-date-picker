@@ -1,3 +1,7 @@
+## [2.0.0] - 07/07/2021
+
+* Support to null safety
+
 ## [1.0.4] - 21/03/2020
 
 * Added support to initialize ScheduledDatePicker with initial values;

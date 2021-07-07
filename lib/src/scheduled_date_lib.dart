@@ -16,20 +16,20 @@ const ScheduledDateTypeValues = {
 
 class ScheduledDatePicker extends StatefulWidget {
   final String defaultLocale;
-  final ScheduledDateType initialType;
-  final DateTime initialScheduledDate;
-  final DateTime initialStartDate;
-  final DateTime initialEndDate;
-  final List<WeekDay> initialWeekDays;
-  final Function(ScheduledDateType) onTypeChanged;
-  final Function(List<WeekDay>) onWeekDaysChanged;
-  final Function(DateTime) onStartDateChanged;
-  final Function(DateTime) onEndDateChanged;
-  final Function(DateTime) onScheduleDateChanged;
+  final ScheduledDateType? initialType;
+  final DateTime? initialScheduledDate;
+  final DateTime? initialStartDate;
+  final DateTime? initialEndDate;
+  final List<WeekDay>? initialWeekDays;
+  final Function(ScheduledDateType?)? onTypeChanged;
+  final Function(List<WeekDay>)? onWeekDaysChanged;
+  final Function(DateTime?)? onStartDateChanged;
+  final Function(DateTime?)? onEndDateChanged;
+  final Function(DateTime?)? onScheduleDateChanged;
 
   const ScheduledDatePicker(
-      {Key key,
-      @required this.defaultLocale,
+      {Key? key,
+      required this.defaultLocale,
       this.onTypeChanged,
       this.onWeekDaysChanged,
       this.onStartDateChanged,
@@ -46,11 +46,11 @@ class ScheduledDatePicker extends StatefulWidget {
 }
 
 class _ScheduledDatePickerState extends State<ScheduledDatePicker> {
-  ScheduledDateType _scheduledDateTypeSelected;
-  List<WeekDay> weekDaysSelected;
-  DateTime startDateSelected;
-  DateTime endDateSelected;
-  DateTime scheduledDate;
+  ScheduledDateType? _scheduledDateTypeSelected;
+  List<WeekDay>? weekDaysSelected;
+  DateTime? startDateSelected;
+  DateTime? endDateSelected;
+  DateTime? scheduledDate;
 
   final dropDownItems = [
     ScheduledDateType.NOW,
@@ -59,7 +59,7 @@ class _ScheduledDatePickerState extends State<ScheduledDatePicker> {
     ScheduledDateType.CUSTOMIZED
   ];
 
-  TextEditingController _startDateController,
+  TextEditingController? _startDateController,
       _endDateController,
       _scheduledDateController;
 
@@ -85,15 +85,15 @@ class _ScheduledDatePickerState extends State<ScheduledDatePicker> {
   Widget build(BuildContext context) {
     _startDateController = TextEditingController(
         text: startDateSelected != null
-            ? DateFormat.yMd(widget.defaultLocale).format(startDateSelected)
+            ? DateFormat.yMd(widget.defaultLocale).format(startDateSelected!)
             : '');
     _endDateController = TextEditingController(
         text: endDateSelected != null
-            ? DateFormat.yMd(widget.defaultLocale).format(endDateSelected)
+            ? DateFormat.yMd(widget.defaultLocale).format(endDateSelected!)
             : '');
     _scheduledDateController = TextEditingController(
         text: scheduledDate != null
-            ? DateFormat.yMd(widget.defaultLocale).format(scheduledDate)
+            ? DateFormat.yMd(widget.defaultLocale).format(scheduledDate!)
             : '');
 
     return Container(
@@ -120,40 +120,37 @@ class _ScheduledDatePickerState extends State<ScheduledDatePicker> {
       items: dropDownItems.map((ScheduledDateType value) {
         return DropdownMenuItem<ScheduledDateType>(
           value: value,
-          child: Text(ScheduledDateTypeValues[value]),
+          child: Text(ScheduledDateTypeValues[value]!),
         );
       }).toList(),
       onChanged: _onScheduleTypeChanged,
     );
   }
 
-  _onScheduleTypeChanged(ScheduledDateType scheduleType) async {
+  _onScheduleTypeChanged(ScheduledDateType? scheduleType) async {
     if (scheduleType == ScheduledDateType.SCHEDULED) {
       final dateSelected = await _showDatePickerAndWaitDate();
       if (widget.onScheduleDateChanged != null)
-        widget.onScheduleDateChanged(dateSelected);
+        widget.onScheduleDateChanged!(dateSelected);
       setState(() => scheduledDate = dateSelected);
     }
     if (scheduleType == ScheduledDateType.NOW) {
       setState(() => scheduledDate = DateTime.now());
       if (widget.onScheduleDateChanged != null)
-        widget.onScheduleDateChanged(scheduledDate);
+        widget.onScheduleDateChanged!(scheduledDate);
     }
     setState(() => _scheduledDateTypeSelected = scheduleType);
-    if (widget.onTypeChanged != null) widget.onTypeChanged(scheduleType);
+    if (widget.onTypeChanged != null) widget.onTypeChanged!(scheduleType);
   }
 
   List<Widget> _scheduleDateComponentsByType() {
     switch (_scheduledDateTypeSelected) {
       case ScheduledDateType.DAILY:
         return _startEndDatePicker();
-        break;
       case ScheduledDateType.CUSTOMIZED:
         return _customizedScheduleComponents();
-        break;
       default:
         return _scheduledDateComponents();
-        break;
     }
   }
 
@@ -178,7 +175,7 @@ class _ScheduledDatePickerState extends State<ScheduledDatePicker> {
                     initialDate: startDateSelected);
                 setState(() => startDateSelected = dateStartSelected);
                 if (widget.onStartDateChanged != null)
-                  widget.onStartDateChanged(dateStartSelected);
+                  widget.onStartDateChanged!(dateStartSelected);
               },
             ),
           ),
@@ -198,7 +195,7 @@ class _ScheduledDatePickerState extends State<ScheduledDatePicker> {
                     initialDate: endDateSelected);
                 setState(() => endDateSelected = dateEndSelected);
                 if (widget.onEndDateChanged != null)
-                  widget.onEndDateChanged(dateEndSelected);
+                  widget.onEndDateChanged!(dateEndSelected);
               },
             ),
           ),
@@ -220,7 +217,7 @@ class _ScheduledDatePickerState extends State<ScheduledDatePicker> {
         onChanged: (weekDays) {
           weekDaysSelected = weekDays;
           if (widget.onWeekDaysChanged != null)
-            widget.onWeekDaysChanged(weekDays);
+            widget.onWeekDaysChanged!(weekDays ?? []);
         },
       ),
       ..._startEndDatePicker()
@@ -241,8 +238,8 @@ class _ScheduledDatePickerState extends State<ScheduledDatePicker> {
     ];
   }
 
-  Future<DateTime> _showDatePickerAndWaitDate({DateTime initialDate}) async {
-    DateTime selectedDate = await showDatePicker(
+  Future<DateTime?> _showDatePickerAndWaitDate({DateTime? initialDate}) async {
+    DateTime? selectedDate = await showDatePicker(
       context: context,
       initialDate: initialDate ?? DateTime.now(),
       firstDate: DateTime(2018),

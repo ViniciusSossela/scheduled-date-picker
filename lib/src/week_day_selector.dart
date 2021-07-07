@@ -3,11 +3,11 @@ import 'package:flutter/widgets.dart';
 import 'package:scheduled_date_picker/src/week_day.dart';
 
 class WeekDaySelector extends StatefulWidget {
-  final Function(List<WeekDay> weekDays) onChanged;
-  final List<WeekDay> initialWeekDaysSelected;
+  final Function(List<WeekDay>? weekDays) onChanged;
+  final List<WeekDay>? initialWeekDaysSelected;
 
   const WeekDaySelector(
-      {Key key, @required this.onChanged, this.initialWeekDaysSelected})
+      {Key? key, required this.onChanged, this.initialWeekDaysSelected})
       : super(key: key);
   @override
   _WeekDaySelectorState createState() => _WeekDaySelectorState();
@@ -34,20 +34,20 @@ class _WeekDaySelectorState extends State<WeekDaySelector> {
     WeekDay.DOM: 'D',
   };
 
-  List<WeekDay> weekDaysSelected;
+  List<WeekDay>? weekDaysSelected;
 
   _weekTapped(WeekDay weekDay) {
     setState(() {
-      if (weekDaysSelected.contains(weekDay))
-        weekDaysSelected.remove(weekDay);
+      if (weekDaysSelected!.contains(weekDay))
+        weekDaysSelected!.remove(weekDay);
       else
-        weekDaysSelected.add(weekDay);
+        weekDaysSelected!.add(weekDay);
     });
     widget.onChanged(weekDaysSelected);
   }
 
   bool _isWeekDaySelected(WeekDay weekDay) =>
-      weekDaysSelected.contains(weekDay);
+      weekDaysSelected!.contains(weekDay);
 
   @override
   void initState() {
@@ -65,7 +65,7 @@ class _WeekDaySelectorState extends State<WeekDaySelector> {
           child: GestureDetector(
             child: CircleAvatar(
               child: Text(
-                weekDaysLetters[weekDay],
+                weekDaysLetters[weekDay]!,
                 style: TextStyle(
                   color: isWeekDaySelected ? Colors.white : Colors.black,
                 ),

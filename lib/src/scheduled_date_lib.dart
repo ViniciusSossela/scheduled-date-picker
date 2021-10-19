@@ -20,6 +20,8 @@ class ScheduledDatePicker extends StatefulWidget {
   final DateTime? initialScheduledDate;
   final DateTime? initialStartDate;
   final DateTime? initialEndDate;
+  final DateTime? firstDate;
+  final DateTime? lastDate;
   final List<WeekDay>? initialWeekDays;
   final Function(ScheduledDateType?)? onTypeChanged;
   final Function(List<WeekDay>)? onWeekDaysChanged;
@@ -39,7 +41,9 @@ class ScheduledDatePicker extends StatefulWidget {
       this.initialScheduledDate,
       this.initialStartDate,
       this.initialEndDate,
-      this.initialWeekDays})
+      this.initialWeekDays,
+      this.firstDate,
+      this.lastDate})
       : super(key: key);
   @override
   _ScheduledDatePickerState createState() => _ScheduledDatePickerState();
@@ -129,7 +133,8 @@ class _ScheduledDatePickerState extends State<ScheduledDatePicker> {
 
   _onScheduleTypeChanged(ScheduledDateType? scheduleType) async {
     if (scheduleType == ScheduledDateType.SCHEDULED) {
-      final dateSelected = await _showDatePickerAndWaitDate();
+      final dateSelected = await _showDatePickerAndWaitDate(
+          firstDate: widget.firstDate, lastDate: widget.lastDate);
       if (widget.onScheduleDateChanged != null)
         widget.onScheduleDateChanged!(dateSelected);
       setState(() => scheduledDate = dateSelected);
@@ -138,6 +143,8 @@ class _ScheduledDatePickerState extends State<ScheduledDatePicker> {
       setState(() => scheduledDate = DateTime.now());
       if (widget.onScheduleDateChanged != null)
         widget.onScheduleDateChanged!(scheduledDate);
+    } else {
+      setState(() => startDateSelected = widget.firstDate ?? DateTime.now());
     }
     setState(() => _scheduledDateTypeSelected = scheduleType);
     if (widget.onTypeChanged != null) widget.onTypeChanged!(scheduleType);
@@ -172,7 +179,9 @@ class _ScheduledDatePickerState extends State<ScheduledDatePicker> {
               ),
               onTap: () async {
                 final dateStartSelected = await _showDatePickerAndWaitDate(
-                    initialDate: startDateSelected);
+                    initialDate: startDateSelected,
+                    firstDate: widget.firstDate,
+                    lastDate: widget.lastDate);
                 setState(() => startDateSelected = dateStartSelected);
                 if (widget.onStartDateChanged != null)
                   widget.onStartDateChanged!(dateStartSelected);
@@ -192,7 +201,9 @@ class _ScheduledDatePickerState extends State<ScheduledDatePicker> {
               ),
               onTap: () async {
                 final dateEndSelected = await _showDatePickerAndWaitDate(
-                    initialDate: endDateSelected);
+                    initialDate: endDateSelected,
+                    firstDate: widget.firstDate,
+                    lastDate: widget.lastDate);
                 setState(() => endDateSelected = dateEndSelected);
                 if (widget.onEndDateChanged != null)
                   widget.onEndDateChanged!(dateEndSelected);
@@ -233,17 +244,25 @@ class _ScheduledDatePickerState extends State<ScheduledDatePicker> {
           hintText: 'Data programada',
           labelText: 'Data programada',
         ),
-        enabled: false,
+        readOnly: true,
+        onTap: () async {
+          final dateSelected = await _showDatePickerAndWaitDate(
+              firstDate: widget.firstDate, lastDate: widget.lastDate);
+          if (widget.onScheduleDateChanged != null)
+            widget.onScheduleDateChanged!(dateSelected);
+          setState(() => scheduledDate = dateSelected);
+        },
       ),
     ];
   }
 
-  Future<DateTime?> _showDatePickerAndWaitDate({DateTime? initialDate}) async {
+  Future<DateTime?> _showDatePickerAndWaitDate(
+      {DateTime? initialDate, DateTime? firstDate, DateTime? lastDate}) async {
     DateTime? selectedDate = await showDatePicker(
       context: context,
-      initialDate: initialDate ?? DateTime.now(),
-      firstDate: DateTime(2018),
-      lastDate: DateTime(2030),
+      initialDate: initialDate ?? (firstDate ?? DateTime.now()),
+      firstDate: firstDate ?? DateTime(2018),
+      lastDate: lastDate ?? DateTime(2030),
     );
     return selectedDate;
   }

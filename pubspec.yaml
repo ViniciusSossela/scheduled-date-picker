@@ -1,16 +1,15 @@
 name: scheduled_date_picker
 description: The scheduled date picker is a set of widgets that allows scheduling date. This can be useful in many scenarios, for scheduled tasks for example.
-version: 2.0.1
+version: 2.0.2
 homepage: https://github.com/ViniciusSossela/scheduled-date-picker
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: ">=2.17.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  intl: ^0.17.0
-
+  intl: ^0.18.0
 
 dev_dependencies:
   flutter_test:

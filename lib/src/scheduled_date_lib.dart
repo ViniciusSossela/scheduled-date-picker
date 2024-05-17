@@ -220,7 +220,7 @@ class _ScheduledDatePickerState extends State<ScheduledDatePicker> {
       SizedBox(height: 30),
       Text(
         'Dias da semana',
-        style: Theme.of(context).textTheme.caption,
+        style: Theme.of(context).textTheme.bodySmall,
       ),
       SizedBox(height: 5),
       WeekDaySelector(

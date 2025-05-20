@@ -1,3 +1,11 @@
+## [2.0.4] - 20/05/2025
+
+- intl upgrade
+
+## [2.0.3] - 17/05/2024
+
+- intl upgrade
+
 ## [2.0.2] - 19/05/2023
 
 - intl and sdk upgrade
